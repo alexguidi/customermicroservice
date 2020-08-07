@@ -1,4 +1,5 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.1
+#FROM registry.access.redhat.com/ubi8/ubi:8.1
+FROM openjdk:8-jdk-alpine
 VOLUME /tmp
 ARG JAR_FILE
 COPY ${JAR_FILE} app.jar
