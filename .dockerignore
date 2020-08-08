@@ -1,2 +1,6 @@
-bin/
-obj/
+target/
+.git/
+.gitignore
+.gitattributes
+docker-compose.yml
+Dockerfile
