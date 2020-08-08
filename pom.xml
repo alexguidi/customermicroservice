@@ -10,13 +10,12 @@
 	<groupId>com.guidi</groupId>
 	<artifactId>customermicroservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+	<packaging>jar</packaging>
 	<name>customermicroservice</name>
 	<description>CRUD Microservice for customers</description>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<docker.image.prefix>guidi</docker.image.prefix>
 	</properties>
 
 	<dependencies>
@@ -60,7 +59,7 @@
 			<artifactId>nosqlunit-mongodb</artifactId>
 			<version>1.0.0</version>
 			<scope>test</scope>
-		</dependency>		
+		</dependency>
 	</dependencies>
 
 	<build>

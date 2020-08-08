@@ -1,4 +1,4 @@
-package com.guidi.customermicroservice.service;
+package com.guidi.customermicroservice.services;
 
 import java.util.Optional;
 
@@ -12,27 +12,27 @@ import com.guidi.customermicroservice.repository.CustomerRepository;
 public class CustomerServiceV1Impl implements CustomerService {
 	
 	@Autowired
-	CustomerRepository CustomerRepository;
+	CustomerRepository customerRepository;
 
 	@Override
 	public Iterable<Customer> findAll() {
-		return CustomerRepository.findAll();
+		return customerRepository.findAll();
 	}
 
 	@Override
 	public Customer save(Customer Customer) {
-		return CustomerRepository.save(Customer);
+		return customerRepository.save(Customer);
 	}
 
 	@Override
 	public Optional<Customer> findByID(String idNumber) {
-		return CustomerRepository.findById(idNumber);
+		return customerRepository.findById(idNumber);
 	}
 
 	@Override
 	public void removeCustomer(String idNumber) {
     	Customer st = new Customer();
     	st.setIdNumber(idNumber);
-    	CustomerRepository.delete(st);		
+    	customerRepository.delete(st);		
 	}
 }

@@ -1,4 +1,4 @@
-package com.guidi.customermicroservice.service;
+package com.guidi.customermicroservice.services;
 
 import java.util.Optional;
 

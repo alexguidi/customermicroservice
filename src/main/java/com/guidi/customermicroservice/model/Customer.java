@@ -18,65 +18,65 @@ public class Customer {
     public Customer(){
     }
 
-    public Customer(String name, String surname, String email){
+    public Customer(final String name, final String surname, final String email) {
         this.name = name;
         this.surname = surname;
         this.email = email;
     }
 
-    public String getIdNumber(){
+    public String getIdNumber() {
         return idNumber;
     }
 
-    public void setIdNumber(String idNumber){
+    public void setIdNumber(final String idNumber) {
         this.idNumber = idNumber;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void setName(String name){
+    public void setName(final String name) {
         this.name = name;
     }
 
-    public String getSurname(){
+    public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname){
+    public void setSurname(final String surname) {
         this.surname = surname;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email){
+    public void setEmail(final String email) {
         this.email = email;
     }
 
-    public String getInitials(){
+    public String getInitials() {
         return initials;
     }
 
-    public void setInitials(String initials){
+    public void setInitials(final String initials) {
         this.initials = initials;
     }
 
-    public String getMobile(){
+    public String getMobile() {
         return mobile;
     }
 
-    public void setMobile(String mobile){
+    public void setMobile(final String mobile) {
         this.mobile = mobile;
     }
 
-    public Integer getLastUpdated(){
+    public Integer getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(Integer lastUpdated){
+    public void setLastUpdated(final Integer lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 }

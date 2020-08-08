@@ -1,22 +1,23 @@
 package com.guidi.customermicroservice.controller;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import java.util.Optional;
 
 import com.guidi.customermicroservice.model.Customer;
-import com.guidi.customermicroservice.service.CustomerService;
+import com.guidi.customermicroservice.services.CustomerService;
 
 
 @RestController
-@RequestMapping(value = "/api/", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/")
 public class CustomerController {
 
     
@@ -24,22 +25,22 @@ public class CustomerController {
 	@Qualifier("v1")
     CustomerService customerServiceV1;
     
-    @RequestMapping(value = "/v1/customer", method = RequestMethod.GET)
+    @GetMapping(value = "/v1/customer")
 	public Iterable<Customer> customerV1() {
 		return customerServiceV1.findAll();
     }
 
-    @RequestMapping(value = "/v1/customer/{idNumber}", method=RequestMethod.GET)
+    @GetMapping(value = "/v1/customer/{idNumber}")
 	public Optional<Customer> read(@PathVariable String idNumber) {
 		return customerServiceV1.findByID(idNumber);
 	}
     
-    @RequestMapping(value = "/v1/customer", method = RequestMethod.POST)
+    @PostMapping(value = "/v1/customer")
 	public Customer create(@RequestBody Customer customer) {
 		return customerServiceV1.save(customer);
     }
     
-    @RequestMapping(value = "/v1/customer/{idNumber}", method=RequestMethod.DELETE)
+    @DeleteMapping(value = "/v1/customer/{idNumber}")
 	public void delete(@PathVariable String idNumber) {
 		customerServiceV1.removeCustomer(idNumber);
     }
