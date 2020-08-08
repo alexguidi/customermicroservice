@@ -8,7 +8,7 @@ WORKDIR /tmp
 COPY . .
 
 # Build, test and pack project
-RUN ./mvnw package
+RUN ./mvnw package -Dmaven.test.skip=true
 
 # Target image ubi8/ubi-minimal:8.0
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.0
@@ -29,4 +29,4 @@ WORKDIR /app
 COPY --from=build-stage /tmp/target/customermicroservice-0.0.1-SNAPSHOT.jar customermicroservice.jar
 
 # Define run cmd
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","customermicroservice.jar"]
+ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar customermicroservice.jar ${0} ${@}"]
