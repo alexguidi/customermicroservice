@@ -13,7 +13,7 @@ jobs:
       with:
         java-version: '8'
     - name: Analyze with SonarCloud
-      run: chmod +x mvnw && ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.login=${SONAR_TOKEN} -Dsonar.coverage.jacoco.xmlReportPaths=${project.build.directory}/site/jacoco/jacoco.xml
+        run: make sonar
       
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
