@@ -13,7 +13,7 @@ jobs:
       with:
         java-version: '8'
     - name: Analyze with SonarCloud
-        run: make sonar
+      run: make sonar
       
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
