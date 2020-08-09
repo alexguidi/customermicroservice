@@ -8,7 +8,7 @@ public interface CustomerService {
 
 	public Iterable<Customer> findAll();
 
-	public Customer save(Customer Customer);
+	public Customer save(Customer customer);
 
 	public Optional<Customer> findByID(String idNumber);
 
