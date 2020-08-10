@@ -75,12 +75,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
-				<configuration>
-                    <excludes>
-                        <exclude>com/guidi/customermicroservice/controller/**/*</exclude>
-                    </excludes>
-                </configuration>				
+				<version>0.8.5</version>				
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
