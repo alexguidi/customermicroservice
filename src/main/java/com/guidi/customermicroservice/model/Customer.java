@@ -11,7 +11,7 @@ public class Customer {
     private String email;
     private String initials;
     private String mobile;
-    private Integer lastUpdated;
+    private Long lastUpdated;
 
     public Customer(){
     }
@@ -70,11 +70,11 @@ public class Customer {
         this.mobile = mobile;
     }
 
-    public Integer getLastUpdated() {
+    public Long getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(final Integer lastUpdated) {
+    public void setLastUpdated(final Long lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 }
