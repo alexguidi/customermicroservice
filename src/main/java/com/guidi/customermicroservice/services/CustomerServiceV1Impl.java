@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.guidi.customermicroservice.model.Customer;
@@ -16,8 +18,11 @@ public class CustomerServiceV1Impl implements CustomerService {
 	CustomerRepository customerRepository;
 
 	@Override
-	public List<Customer> findAll() {
-		return customerRepository.findAll();
+	public List<Customer> findAll(Pageable pageable) {
+		Page<Customer> pageCustomer = customerRepository.findAll(pageable);
+		List<Customer> customerList = pageCustomer.getContent();
+		
+		return customerList;
 	}
 
 	@Override

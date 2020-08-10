@@ -2,10 +2,15 @@ package com.guidi.customermicroservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +36,11 @@ public class CustomerController {
     CustomerService customerServiceV1;
     
     @GetMapping(value = "/v1/customer")
-	public ResponseEntity<GenericResponse> findAll() {
+	public ResponseEntity<GenericResponse> findAll(@RequestParam("page") int page, 
+			  @RequestParam("size") int size, @RequestParam("sort") String sort, Pageable pageable) {
     	List<Customer> customerList= new ArrayList<Customer>();
-    	customerList.addAll(customerServiceV1.findAll());
+    	
+    	customerList.addAll(customerServiceV1.findAll(pageable));
     	
     	GenericResponse<Customer> genericResponse = new GenericResponse<Customer>(HttpStatus.OK.value(), 
 				HttpStatus.OK.name(),
