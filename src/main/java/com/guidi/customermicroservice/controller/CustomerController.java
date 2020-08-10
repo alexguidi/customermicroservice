@@ -2,6 +2,8 @@ package com.guidi.customermicroservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,9 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.guidi.customermicroservice.model.Customer;
+import com.guidi.customermicroservice.model.GenericResponse;
 import com.guidi.customermicroservice.services.CustomerService;
 
 
@@ -26,22 +31,57 @@ public class CustomerController {
     CustomerService customerServiceV1;
     
     @GetMapping(value = "/v1/customer")
-	public Iterable<Customer> customerV1() {
-		return customerServiceV1.findAll();
+	public ResponseEntity<GenericResponse> findAll() {
+    	List<Customer> customerList= new ArrayList<Customer>();
+    	customerList.addAll(customerServiceV1.findAll());
+    	
+    	GenericResponse<Customer> genericResponse = new GenericResponse<Customer>(HttpStatus.OK.value(), 
+				HttpStatus.OK.name(),
+				"Customer List Found",
+				customerList);
+    	
+    	return ResponseEntity.ok().body(genericResponse);
     }
 
     @GetMapping(value = "/v1/customer/{idNumber}")
-	public Optional<Customer> read(@PathVariable String idNumber) {
-		return customerServiceV1.findByID(idNumber);
+	public ResponseEntity<GenericResponse> findById(@PathVariable String idNumber) {
+    	List customerList = new ArrayList();
+    	customerList.add(customerServiceV1.findByID(idNumber));
+    	
+    	GenericResponse<Customer> genericResponse = new GenericResponse<Customer>(HttpStatus.OK.value(), 
+				HttpStatus.OK.name(),
+				"Customer Found",
+				customerList);
+    	
+    	return ResponseEntity.ok().body(genericResponse);
 	}
     
     @PostMapping(value = "/v1/customer")
-	public Customer create(@RequestBody Customer customer) {
-		return customerServiceV1.save(customer);
+	public ResponseEntity<GenericResponse> create(@RequestBody Customer customer) {    	
+    	List<Customer> customerList= new ArrayList<Customer>();
+    	customerList.add(customerServiceV1.save(customer));
+    	
+    	GenericResponse<Customer> genericResponse = new GenericResponse<Customer>(HttpStatus.OK.value(), 
+    															HttpStatus.OK.name(),
+    															"Customer Created Successfully",
+    															customerList);
+    	
+    	
+    	return ResponseEntity.ok().body(genericResponse);
     }
     
     @DeleteMapping(value = "/v1/customer/{idNumber}")
-	public void delete(@PathVariable String idNumber) {
+	public ResponseEntity<GenericResponse> delete(@PathVariable String idNumber) {
+    	List customerList = new ArrayList();
+    	customerList.add(customerServiceV1.findByID(idNumber));
+    	
+    	GenericResponse<Customer> genericResponse = new GenericResponse<Customer>(HttpStatus.OK.value(), 
+				HttpStatus.OK.name(),
+				"Customer Deleted Successfully",
+				customerList);
+    	
 		customerServiceV1.removeCustomer(idNumber);
+		
+		return ResponseEntity.ok().body(genericResponse);
     }
 }

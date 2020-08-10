@@ -1,0 +1,12 @@
+openapi: 3.0.0
+info:
+  title: Customer Microservice
+  version: 1.0.0 
+  description: CRUD Customer Microservice using Spring Boot. 
+  contact:
+    name: Alex Roberto Guidi
+    email: guidowww@gmail.com
+    url: https://github.com/alexguidi
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html

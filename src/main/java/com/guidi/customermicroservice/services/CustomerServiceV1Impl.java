@@ -1,5 +1,6 @@
 package com.guidi.customermicroservice.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class CustomerServiceV1Impl implements CustomerService {
 	CustomerRepository customerRepository;
 
 	@Override
-	public Iterable<Customer> findAll() {
+	public List<Customer> findAll() {
 		return customerRepository.findAll();
 	}
 
