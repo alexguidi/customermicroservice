@@ -6,6 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 
+/**This class is responsible to create a fakeMongodb for tests purposes,
+ * this database is created and deleted automatically only during the test 
+ * phase, avoiding to include unnecessary data in real databases.
+ * 
+ * @author Alex Guidi
+ *
+ */
 @Configuration
 public class FakeMongo extends AbstractMongoConfiguration{
 

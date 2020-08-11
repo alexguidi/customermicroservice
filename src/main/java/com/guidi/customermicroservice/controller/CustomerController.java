@@ -24,16 +24,38 @@ import com.guidi.customermicroservice.model.GenericResponse;
 import com.guidi.customermicroservice.services.CustomerService;
 
 
+/** This is the customer controller class, responsible to process the requests received and return the response.
+ * The root path for this controller is /api/
+ * @author Alex Guidi
+ *
+ */
 @RestController
 @RequestMapping(value = "/api/")
 public class CustomerController {
     
+	/**
+	 * This is the GenericResponse, object responsible to store all
+	 * fields required in response.
+	 */
 	private GenericResponse<Customer> genericResponse;
 	
+	/**This is the object responsible to access the service.
+	 * The service will integrate with repository to access mongodb.
+	 */
 	@Autowired
 	@Qualifier("v1")
     CustomerService customerServiceV1;
     
+	
+	/**This method receive GET calls from /api/v1/customer and return a list of customers. 
+	 * The pagination is based by the parameters page, size and sort passed in the request.
+	 * 
+	 * @param page
+	 * @param size
+	 * @param sort
+	 * @param pageable
+	 * @return GenericResponse
+	 */
     @GetMapping(value = "/v1/customer")
 	public ResponseEntity<GenericResponse<Customer>> findAll(@RequestParam("page") int page, 
 			  @RequestParam("size") int size, @RequestParam("sort") String sort, Pageable pageable) {
@@ -49,6 +71,12 @@ public class CustomerController {
     	return ResponseEntity.ok().body(genericResponse);
     }
 
+    /**This method receive GET calls from /api/v1/customer/{idNumber} and return the customer passed by
+     * parameter idNumber if it exists in mongodb. The customer is returned in payload field inside of GenericResponse
+     * 
+     * @param idNumber
+     * @return GenericResponse
+     */
     @GetMapping(value = "/v1/customer/{idNumber}")
 	public ResponseEntity<GenericResponse<Customer>> findById(@PathVariable String idNumber) {
     	List<Customer> customerList = new ArrayList<>();
@@ -66,6 +94,12 @@ public class CustomerController {
     	return ResponseEntity.ok().body(genericResponse);
 	}
     
+    /** This methods receive POST calls from /v1/customer to create a new customer in mongodb.
+     * The customer is created based in the json inside of body request. The customer created is returned in payload field in GenericResponse.
+     * 
+     * @param customer
+     * @return GenericResponse
+     */
     @PostMapping(value = "/v1/customer")
 	public ResponseEntity<GenericResponse<Customer>> create(@RequestBody Customer customer) {    	
     	List<Customer> customerList= new ArrayList<>();
@@ -83,6 +117,12 @@ public class CustomerController {
     	return ResponseEntity.ok().body(genericResponse);
     }
     
+    /**This methods receive DELETE calls from /v1/customer/{idNumber} and delete the customer passed by
+     * parameter idNumber if it exists in mongodb. The deleted customer is returned in payload field in GenericResponse
+     * 
+     * @param idNumber
+     * @return GenericResponse
+     */
     @DeleteMapping(value = "/v1/customer/{idNumber}")
 	public ResponseEntity<GenericResponse<Customer>> delete(@PathVariable String idNumber) {
     	List<Customer> customerList = new ArrayList<>();

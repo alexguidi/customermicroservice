@@ -11,38 +11,44 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.guidi.customermicroservice.config.FakeMongo;
+import com.guidi.customermicroservice.model.Customer;
 import com.lordofthejars.nosqlunit.annotation.UsingDataSet;
 import com.lordofthejars.nosqlunit.core.LoadStrategyEnum;
 import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
 
-import com.guidi.customermicroservice.model.Customer;
-import com.guidi.customermicroservice.repository.CustomerRepository;
-
-
+/**
+ * This is the class responsible to test the application, the class uses 
+ * FakeMongodb to avoid include unnecessary data in real databases.
+ * 
+ * @author Alex Guidi
+ *
+ */
 @RunWith(SpringRunner.class)
 @Import(value = { FakeMongo.class })
 @EnableMongoRepositories(basePackageClasses = { CustomerRepository.class })
 public class CustomerRepositoryTest {
-	
-	@Autowired
-	private ApplicationContext applicationContext;
 
+	/**A concrete object will be created during run time provided by 
+	 * spring framework.
+	 */
 	@Autowired
 	private CustomerRepository customerRepository;
 
+	/**
+	 * Create the FakeMongoDb to run in background.
+	 */
 	@Rule
 	public MongoDbRule embeddedMongoDbRule = newMongoDbRule().defaultSpringMongoDb("mockDB");
 
+	/**
+	 * This method check the scenario where no customer should exist
+	 * in MongoDb.
+	 */
 	@Test
 	@UsingDataSet(loadStrategy = LoadStrategyEnum.DELETE_ALL)
 	public void noCustomersTest() {
@@ -50,6 +56,10 @@ public class CustomerRepositoryTest {
 		assertTrue("List should be empty", customers.isEmpty());
 	}
 	
+	/**
+	 * This method checks if after save 5 customer in an empty database
+	 * they are present when a findAll method is called.
+	 */
 	@Test
 	@UsingDataSet(loadStrategy = LoadStrategyEnum.DELETE_ALL)
 	public void saveCustomersTest() {
@@ -61,6 +71,13 @@ public class CustomerRepositoryTest {
 		assertEquals(qt, customers.size());
 	}
 	
+	
+	/**
+	 * This method check if a customer is returned based in idNumber
+	 * parameter passed.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@UsingDataSet(loadStrategy = LoadStrategyEnum.DELETE_ALL)
 	public void findById() throws Exception {		

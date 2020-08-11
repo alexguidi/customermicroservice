@@ -1,49 +1,52 @@
 package com.guidi.customermicroservice.repository;
 
-import static com.lordofthejars.nosqlunit.mongodb.MongoDbRule.MongoDbRuleBuilder.newMongoDbRule;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import com.guidi.customermicroservice.config.FakeMongo;
-import com.guidi.customermicroservice.model.Customer;
-import com.guidi.customermicroservice.services.CustomerService;
-import com.guidi.customermicroservice.services.CustomerServiceV1Impl;
-import com.lordofthejars.nosqlunit.annotation.UsingDataSet;
-import com.lordofthejars.nosqlunit.core.LoadStrategyEnum;
-import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import static org.mockito.Mockito.doReturn;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import com.guidi.customermicroservice.model.Customer;
+import com.guidi.customermicroservice.services.CustomerServiceV1Impl;
+
+/**
+ * This class is responsible to test the service but without a FakeMongoDb,
+ * the tests are based on Mock objects with the value expected.
+ *  
+ * @author Alex Guidi
+ *
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceV1ImplTest {
+	/**
+	 * Responsible to mock CustomerRepository, this time without a MongoDb.
+	 */
 	@Mock
 	private CustomerRepository customerRepository;
 	
-
+	/**
+	 * Responsible to mock CustomerServiceV1Impl.
+	 */
 	@InjectMocks
 	CustomerServiceV1Impl customerService;
 
+	/**
+	 * This method is responsible to test findAll method. The method
+	 * will check if after call findAll method in service the returned 
+	 * information is the expected.
+	 */
 	@Test
 	public void findAll() {
 		Pageable pageable = PageRequest.of(0, 2);
@@ -59,6 +62,11 @@ public class CustomerServiceV1ImplTest {
 		assertThat(customers).isEqualTo(pages.getContent());
 	}
 	
+	/**
+	 * This method is responsible to test save method. The method
+	 * will check if after call save method in service the returned 
+	 * information is the expected.
+	 */
 	@Test
 	public void save() {
 		Customer customer = new Customer("Alex", "Guidi", "guidowww@gmail.com");
@@ -69,6 +77,11 @@ public class CustomerServiceV1ImplTest {
 		assertThat(customer).isEqualTo(customerFromService);
 	}
 	
+	/**
+	 * This method is responsible to test findById method. The method
+	 * will check if after call findById method in service the returned 
+	 * information is the expected.
+	 */
 	@Test
 	public void findById() {
 		Optional<Customer> customer = Optional.of(new Customer("Alex", "Guidi", "guidowww@gmail.com"));
@@ -80,6 +93,12 @@ public class CustomerServiceV1ImplTest {
 		assertThat(customer).isEqualTo(customerFromService);	
 	}
 	
+	/**
+	 * This method is responsible to test removeCustomer method. The method
+	 * will check if after call removeCustomer method no issue happened, if 
+	 * any exception happens the method will not reach assertTrue(true) method
+	 * failing the test.
+	 */
 	@Test
 	public void removeCustomer() {
 		customerService.removeCustomer("123");
