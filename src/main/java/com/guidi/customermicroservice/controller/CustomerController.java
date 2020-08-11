@@ -33,42 +33,42 @@ import com.guidi.customermicroservice.services.CustomerService;
 @RequestMapping(value = "/api/")
 public class CustomerController {
     
-	/**
-	 * This is the GenericResponse, object responsible to store all
-	 * fields required in response.
-	 */
-	private GenericResponse<Customer> genericResponse;
-	
-	/**This is the object responsible to access the service.
-	 * The service will integrate with repository to access mongodb.
-	 */
-	@Autowired
-	@Qualifier("v1")
+    /**
+    * This is the GenericResponse, object responsible to store all
+    * fields required in response.
+    */
+    private GenericResponse<Customer> genericResponse;
+    
+    /**This is the object responsible to access the service.
+     * The service will integrate with repository to access mongodb.
+     */
+    @Autowired
+    @Qualifier("v1")
     CustomerService customerServiceV1;
     
-	
-	/**This method receive GET calls from /api/v1/customer and return a list of customers. 
-	 * The pagination is based by the parameters page, size and sort passed in the request.
-	 * 
-	 * @param page
-	 * @param size
-	 * @param sort
-	 * @param pageable
-	 * @return GenericResponse
-	 */
+    
+    /**This method receive GET calls from /api/v1/customer and return a list of customers. 
+     * The pagination is based by the parameters page, size and sort passed in the request.
+     * 
+     * @param page
+     * @param size
+     * @param sort
+     * @param pageable
+     * @return GenericResponse
+     */
     @GetMapping(value = "/v1/customer")
-	public ResponseEntity<GenericResponse<Customer>> findAll(@RequestParam("page") int page, 
-			  @RequestParam("size") int size, @RequestParam("sort") String sort, Pageable pageable) {
-    	List<Customer> customerList= new ArrayList<>();
-    	
-    	if(!customerServiceV1.findAll(pageable).isEmpty()) {
-    		customerList.addAll(customerServiceV1.findAll(pageable));	
-    		genericResponse = new GenericResponse<>(HttpStatus.OK.value(), HttpStatus.OK.name(), "Customer List Found", customerList);
-    	}else {
-    		genericResponse = new GenericResponse<>(HttpStatus.NO_CONTENT.value(), "KO", "Customer List Not Found", customerList);   		
-    	}   	
-    	
-    	return ResponseEntity.ok().body(genericResponse);
+    public ResponseEntity<GenericResponse<Customer>> findAll(@RequestParam("page") int page, 
+                        @RequestParam("size") int size, @RequestParam("sort") String sort, Pageable pageable) {
+        List<Customer> customerList= new ArrayList<>();
+        
+        if(!customerServiceV1.findAll(pageable).isEmpty()) {
+            customerList.addAll(customerServiceV1.findAll(pageable));
+            genericResponse = new GenericResponse<>(HttpStatus.OK.value(), HttpStatus.OK.name(), "Customer List Found", customerList);
+        }else {
+            genericResponse = new GenericResponse<>(HttpStatus.NO_CONTENT.value(), "KO", "Customer List Not Found", customerList);
+        }
+        
+        return ResponseEntity.ok().body(genericResponse);
     }
 
     /**This method receive GET calls from /api/v1/customer/{idNumber} and return the customer passed by
@@ -78,21 +78,21 @@ public class CustomerController {
      * @return GenericResponse
      */
     @GetMapping(value = "/v1/customer/{idNumber}")
-	public ResponseEntity<GenericResponse<Customer>> findById(@PathVariable String idNumber) {
-    	List<Customer> customerList = new ArrayList<>();
-    	
-    	Optional<Customer> customer = customerServiceV1.findByID(idNumber);
-    	
-    	if(customer.isPresent()) {
-    		customerList.add(customer.get());		
-    		genericResponse = new GenericResponse<>(HttpStatus.OK.value(), HttpStatus.OK.name(), "Customer Found", customerList);
-    		
-    	}else {
-    		genericResponse = new GenericResponse<>(HttpStatus.NO_CONTENT.value(), "KO", "Customer Not Found", customerList);
-    	}	
-    	
-    	return ResponseEntity.ok().body(genericResponse);
-	}
+    public ResponseEntity<GenericResponse<Customer>> findById(@PathVariable String idNumber) {
+        List<Customer> customerList = new ArrayList<>();
+        
+        Optional<Customer> customer = customerServiceV1.findByID(idNumber);
+        
+        if(customer.isPresent()) {
+            customerList.add(customer.get());
+            genericResponse = new GenericResponse<>(HttpStatus.OK.value(), HttpStatus.OK.name(), "Customer Found", customerList);
+            
+        }else {
+            genericResponse = new GenericResponse<>(HttpStatus.NO_CONTENT.value(), "KO", "Customer Not Found", customerList);
+        }
+        
+        return ResponseEntity.ok().body(genericResponse);
+    }
     
     /** This methods receive POST calls from /v1/customer to create a new customer in mongodb.
      * The customer is created based in the json inside of body request. The customer created is returned in payload field in GenericResponse.
@@ -101,20 +101,20 @@ public class CustomerController {
      * @return GenericResponse
      */
     @PostMapping(value = "/v1/customer")
-	public ResponseEntity<GenericResponse<Customer>> create(@RequestBody Customer customer) {    	
-    	List<Customer> customerList= new ArrayList<>();
-    	customer.setLastUpdated(new Timestamp(System.currentTimeMillis()).getTime());
-    	
-    	Customer customerReturned = customerServiceV1.save(customer);
-    	
-    	if(customerReturned != null) {
-    		customerList.add(customerServiceV1.save(customer));
-    		genericResponse = new GenericResponse<>(HttpStatus.OK.value(), HttpStatus.OK.name(), "Customer Created Successfully", customerList);	
-    	}else {
-    		genericResponse = new GenericResponse<>(HttpStatus.NO_CONTENT.value(), "KO", "Customer was not created", customerList);
-    	}
-    	
-    	return ResponseEntity.ok().body(genericResponse);
+    public ResponseEntity<GenericResponse<Customer>> create(@RequestBody Customer customer) {    	
+        List<Customer> customerList= new ArrayList<>();
+        customer.setLastUpdated(new Timestamp(System.currentTimeMillis()).getTime());
+        
+        Customer customerReturned = customerServiceV1.save(customer);
+        
+        if(customerReturned != null) {
+            customerList.add(customerServiceV1.save(customer));
+            genericResponse = new GenericResponse<>(HttpStatus.OK.value(), HttpStatus.OK.name(), "Customer Created Successfully", customerList);
+        }else {
+            genericResponse = new GenericResponse<>(HttpStatus.NO_CONTENT.value(), "KO", "Customer was not created", customerList);
+        }
+        
+        return ResponseEntity.ok().body(genericResponse);
     }
     
     /**This methods receive DELETE calls from /v1/customer/{idNumber} and delete the customer passed by
@@ -124,23 +124,23 @@ public class CustomerController {
      * @return GenericResponse
      */
     @DeleteMapping(value = "/v1/customer/{idNumber}")
-	public ResponseEntity<GenericResponse<Customer>> delete(@PathVariable String idNumber) {
-    	List<Customer> customerList = new ArrayList<>();
-    	
-    	Optional<Customer> optionalCustomer = customerServiceV1.findByID(idNumber);
-    	
-    	if(optionalCustomer.isPresent()) {
-    		Customer customer = optionalCustomer.get();
-    		customer.setLastUpdated(new Timestamp(System.currentTimeMillis()).getTime());  		
-    		customerList.add(customer);
-    		
-    		customerServiceV1.removeCustomer(idNumber);
-    		
-    		genericResponse = new GenericResponse<>(HttpStatus.OK.value(), HttpStatus.OK.name(), "Customer Deleted Successfully", customerList);
-    	}else {
-    		genericResponse = new GenericResponse<>(HttpStatus.NOT_FOUND.value(), "KO", "Customer does not exist", customerList);
-    	}
-    	
-    	return ResponseEntity.ok().body(genericResponse);
+    public ResponseEntity<GenericResponse<Customer>> delete(@PathVariable String idNumber) {
+        List<Customer> customerList = new ArrayList<>();
+        
+        Optional<Customer> optionalCustomer = customerServiceV1.findByID(idNumber);
+        
+        if(optionalCustomer.isPresent()) {
+            Customer customer = optionalCustomer.get();
+            customer.setLastUpdated(new Timestamp(System.currentTimeMillis()).getTime());
+            customerList.add(customer);
+            
+            customerServiceV1.removeCustomer(idNumber);
+            
+            genericResponse = new GenericResponse<>(HttpStatus.OK.value(), HttpStatus.OK.name(), "Customer Deleted Successfully", customerList);
+        }else {
+            genericResponse = new GenericResponse<>(HttpStatus.NOT_FOUND.value(), "KO", "Customer does not exist", customerList);
+        }
+        
+        return ResponseEntity.ok().body(genericResponse);
     }
 }
