@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customermicroservice
+  labels:
+    app: customermicroservice
+    version: latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customermicroservice
+      version: latest
+  template:
+    metadata:
+      labels:
+        app: customermicroservice
+        version: latest
+    spec:
+      containers:
+      - name: customermicroservice
+        image: alexguidi/customermicroservice:latest
+        ports:
+        - containerPort: 9000
+        env:
+        - name: MONGO_AUTHENTICATION_DATABASE
+          value: customermicroservicedb
+        - name: MONGO_DATABASE
+          value: customermicroservicedb
+        - name: MONGO_HOST
+          value: mongodb
+        - name: MONGO_PASSWORD
+          value: customermicroservice
+        - name: MONGO_PORT
+          value: '27017'
+        - name: MONGO_USERNAME
+          value: customermicroservice
+        - name: SERVER_PORT
+          value: '9000'
