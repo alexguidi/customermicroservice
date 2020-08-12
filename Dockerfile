@@ -8,7 +8,7 @@ WORKDIR /tmp
 COPY . .
 
 # Build and pack project
-RUN chmod +x mvnw && ./mvnw package -Dmaven.test.skip=true
+RUN ./mvnw package -Dmaven.test.skip=true
 
 # Target image ubi8/ubi-minimal:8.0
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.0
