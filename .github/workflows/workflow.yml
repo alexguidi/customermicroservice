@@ -35,4 +35,4 @@ jobs:
         version: 'latest'
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
         parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
-        run: oc rollout restart deployment customermicroservice
+        cmd: 'rollout restart deployment customermicroservice'
