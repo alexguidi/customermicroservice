@@ -1,0 +1,5 @@
+com.guidi.customermicroservice
+com.guidi.customermicroservice.controller
+com.guidi.customermicroservice.model
+com.guidi.customermicroservice.repository
+com.guidi.customermicroservice.services

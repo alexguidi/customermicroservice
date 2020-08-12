@@ -2,6 +2,13 @@ package com.guidi.customermicroservice.model;
 
 import java.util.List;
 
+/** This is the class responsible to return a GenericResponse to the caller.
+ * The class is generic and accept any type of object inside of payload.
+ * 
+ * @author Alex Guidi
+ *
+ * @param <T>
+ */
 public class GenericResponse<T> {
 
 	private int code;

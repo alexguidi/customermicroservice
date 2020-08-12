@@ -7,6 +7,12 @@ import org.springframework.data.domain.Pageable;
 
 import com.guidi.customermicroservice.model.Customer;
 
+/**This is the interface of the service, all implementation of this interface
+ * must implement all methods inside of this interface.
+ * 
+ * @author Alex Guidi
+ *
+ */
 public interface CustomerService {
 
 	public List<Customer> findAll(Pageable pageable);

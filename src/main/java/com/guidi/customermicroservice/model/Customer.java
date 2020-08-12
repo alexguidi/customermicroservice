@@ -2,6 +2,11 @@ package com.guidi.customermicroservice.model;
 
 import org.springframework.data.annotation.Id;
 
+/**This is the entity class responsible to represent a Customer
+ * 
+ * @author Alex Guidi
+ *
+ */
 public class Customer {
 
     @Id

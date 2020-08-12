@@ -35,15 +35,32 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static org.mockito.Mockito.doReturn;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * This class is responsible to test the service but without a FakeMongoDb,
+ * the tests are based on Mock objects with the value expected.
+ *  
+ * @author Alex Guidi
+ *
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceV1ImplTest {
+	/**
+	 * Responsible to mock CustomerRepository, this time without a MongoDb.
+	 */
 	@Mock
 	private CustomerRepository customerRepository;
 	
-
+    /**
+	 * Responsible to mock CustomerServiceV1Impl.
+	 */
 	@InjectMocks
 	CustomerServiceV1Impl customerService;
 
+	/**
+	 * This method is responsible to test findAll method. The method
+	 * will check if after call findAll method in service the returned 
+	 * information is the expected.
+	 */
 	@Test
 	public void findAll() {
 		Pageable pageable = PageRequest.of(0, 2);
@@ -59,6 +76,11 @@ public class CustomerServiceV1ImplTest {
 		assertThat(customers).isEqualTo(pages.getContent());
 	}
 	
+	/**
+	 * This method is responsible to test save method. The method
+	 * will check if after call save method in service the returned 
+	 * information is the expected.
+	 */
 	@Test
 	public void save() {
 		Customer customer = new Customer("Alex", "Guidi", "guidowww@gmail.com");
@@ -69,6 +91,11 @@ public class CustomerServiceV1ImplTest {
 		assertThat(customer).isEqualTo(customerFromService);
 	}
 	
+	/**
+	 * This method is responsible to test findById method. The method
+	 * will check if after call findById method in service the returned 
+	 * information is the expected.
+	 */
 	@Test
 	public void findById() {
 		Optional<Customer> customer = Optional.of(new Customer("Alex", "Guidi", "guidowww@gmail.com"));
@@ -80,6 +107,12 @@ public class CustomerServiceV1ImplTest {
 		assertThat(customer).isEqualTo(customerFromService);	
 	}
 	
+	/**
+	 * This method is responsible to test removeCustomer method. The method
+	 * will check if after call removeCustomer method no issue happened, if 
+	 * any exception happens the method will not reach assertTrue(true) method
+	 * failing the test.
+	 */
 	@Test
 	public void removeCustomer() {
 		customerService.removeCustomer("123");
