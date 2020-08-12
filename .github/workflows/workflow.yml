@@ -32,8 +32,7 @@ jobs:
     - name: OpenShift Action
       uses: redhat-developer/openshift-actions@v1.1
       with:
-        version: '4.1'
+        version: 'latest'
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
         parameters: '{"apitoken": "${{ secrets.API_TOKEN }}", "acceptUntrustedCerts": "true"}'
-        cmd: |
-            'oc rollout restart deployment customermicroservice'
+        run: oc rollout restart deployment customermicroservice
