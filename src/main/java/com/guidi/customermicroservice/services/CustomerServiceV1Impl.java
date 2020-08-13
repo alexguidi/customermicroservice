@@ -25,49 +25,49 @@ import com.guidi.customermicroservice.repository.CustomerRepository;
  */
 @Service("v1")
 public class CustomerServiceV1Impl implements CustomerService {
-	
-	/**A concrete object will be created during run time provided by 
-	 * spring framework.
-	 * 
-	 */
-	@Autowired
-	CustomerRepository customerRepository;
+    
+    /**A concrete object will be created during run time provided by 
+     * spring framework.
+     * 
+     */
+    @Autowired
+    CustomerRepository customerRepository;
 
-	/**
-	 * This is the method responsible to get all customers in mongodb
-	 * based in the pagination passed in request.
-	 */
-	@Override
-	public List<Customer> findAll(Pageable pageable) {
-		Page<Customer> pageCustomer = customerRepository.findAll(pageable);
-		return pageCustomer.getContent();
-	}
+    /**
+     * This is the method responsible to get all customers in mongodb
+     * based in the pagination passed in request.
+     */
+    @Override
+    public List<Customer> findAll(Pageable pageable) {
+        Page<Customer> pageCustomer = customerRepository.findAll(pageable);
+        return pageCustomer.getContent();
+    }
 
-	/**
-	 * This is the method responsible to save a new customer in mongodb.
-	 */
-	@Override
-	public Customer save(Customer customer) {
-		return customerRepository.save(customer);
-	}
+    /**
+     * This is the method responsible to save a new customer in mongodb.
+     */
+    @Override
+    public Customer save(Customer customer) {
+        return customerRepository.save(customer);
+    }
 
-	/**
-	 * This is the method responsible to retrieve a customer from mongodb
-	 * based in idNumber passed during the request.
-	 */
-	@Override
-	public Optional<Customer> findByID(String idNumber) {
-		return customerRepository.findById(idNumber);
-	}
+    /**
+     * This is the method responsible to retrieve a customer from mongodb
+     * based in idNumber passed during the request.
+     */
+    @Override
+    public Optional<Customer> findByID(String idNumber) {
+        return customerRepository.findById(idNumber);
+    }
 
-	/**
-	 * This methods remove a customer from mongo db based in idNumber parameter
-	 * passed during the request.
-	 */
-	@Override
-	public void removeCustomer(String idNumber) {
-    	Customer st = new Customer();
-    	st.setIdNumber(idNumber);
-    	customerRepository.delete(st);		
-	}
+    /**
+     * This methods remove a customer from mongo db based in idNumber parameter
+     * passed during the request.
+     */
+    @Override
+    public void removeCustomer(String idNumber) {
+        Customer st = new Customer();
+        st.setIdNumber(idNumber);
+        customerRepository.delete(st);        
+    }
 }

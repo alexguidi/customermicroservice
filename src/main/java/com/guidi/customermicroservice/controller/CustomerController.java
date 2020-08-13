@@ -101,7 +101,7 @@ public class CustomerController {
      * @return GenericResponse
      */
     @PostMapping(value = "/v1/customer")
-    public ResponseEntity<GenericResponse<Customer>> create(@RequestBody Customer customer) {    	
+    public ResponseEntity<GenericResponse<Customer>> create(@RequestBody Customer customer) {        
         List<Customer> customerList= new ArrayList<>();
         customer.setLastUpdated(new Timestamp(System.currentTimeMillis()).getTime());
         

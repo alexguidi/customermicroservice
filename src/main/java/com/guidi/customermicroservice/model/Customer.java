@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Id;
 public class Customer {
 
     @Id
-	private String idNumber;
+    private String idNumber;
     private String name;
     private String surname;
     private String email;

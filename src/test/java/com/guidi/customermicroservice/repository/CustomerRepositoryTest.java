@@ -39,62 +39,62 @@ import com.guidi.customermicroservice.repository.CustomerRepository;
 @Import(value = { FakeMongo.class })
 @EnableMongoRepositories(basePackageClasses = { CustomerRepository.class })
 public class CustomerRepositoryTest {
-	
-	@Autowired
-	private ApplicationContext applicationContext;
+    
+    @Autowired
+    private ApplicationContext applicationContext;
 
-	/**A concrete object will be created during run time provided by 
-	 * spring framework.
-	 */
-	@Autowired
-	private CustomerRepository customerRepository;
+    /**A concrete object will be created during run time provided by 
+     * spring framework.
+     */
+    @Autowired
+    private CustomerRepository customerRepository;
 
-	/**
-	 * Create the FakeMongoDb to run in background.
-	 */
-	@Rule
-	public MongoDbRule embeddedMongoDbRule = newMongoDbRule().defaultSpringMongoDb("mockDB");
+    /**
+     * Create the FakeMongoDb to run in background.
+     */
+    @Rule
+    public MongoDbRule embeddedMongoDbRule = newMongoDbRule().defaultSpringMongoDb("mockDB");
 
-	/**
-	 * This method check the scenario where no customer should exist
-	 * in MongoDb.
-	 */
-	@Test
-	@UsingDataSet(loadStrategy = LoadStrategyEnum.DELETE_ALL)
-	public void noCustomersTest() {
-		List<Customer> customers = customerRepository.findAll();
-		assertTrue("List should be empty", customers.isEmpty());
-	}
-	
-	/**
-	 * This method checks if after save 5 customer in an empty database
-	 * they are present when a findAll method is called.
-	 */
-	@Test
-	@UsingDataSet(loadStrategy = LoadStrategyEnum.DELETE_ALL)
-	public void saveCustomersTest() {
-		int qt = 5;
-		for (int i = 0; i < qt; i++) {
-			customerRepository.save(new Customer());		
-		}
-		List<Customer> customers = customerRepository.findAll();
-		assertEquals(qt, customers.size());
-	}
-	
-	/**
-	 * This method check if a customer is returned based in idNumber
-	 * parameter passed.
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	@UsingDataSet(loadStrategy = LoadStrategyEnum.DELETE_ALL)
-	public void findById() throws Exception {		
-		customerRepository.save(new Customer("Alex", "Guidi", "guidowww@gmail.com"));
-		List<Customer> customers = customerRepository.findAll();
-		Optional<Customer> st = customerRepository.findById(customers.get(0).getIdNumber());
-		assertTrue(st.isPresent());
-		assertEquals("Alex", st.get().getName());
-	}
+    /**
+     * This method check the scenario where no customer should exist
+     * in MongoDb.
+     */
+    @Test
+    @UsingDataSet(loadStrategy = LoadStrategyEnum.DELETE_ALL)
+    public void noCustomersTest() {
+        List<Customer> customers = customerRepository.findAll();
+        assertTrue("List should be empty", customers.isEmpty());
+    }
+    
+    /**
+     * This method checks if after save 5 customer in an empty database
+     * they are present when a findAll method is called.
+     */
+    @Test
+    @UsingDataSet(loadStrategy = LoadStrategyEnum.DELETE_ALL)
+    public void saveCustomersTest() {
+        int qt = 5;
+        for (int i = 0; i < qt; i++) {
+            customerRepository.save(new Customer());        
+        }
+        List<Customer> customers = customerRepository.findAll();
+        assertEquals(qt, customers.size());
+    }
+    
+    /**
+     * This method check if a customer is returned based in idNumber
+     * parameter passed.
+     * 
+     * @throws Exception
+     */
+    @Test
+    @UsingDataSet(loadStrategy = LoadStrategyEnum.DELETE_ALL)
+    public void findById() throws Exception {        
+        customerRepository.save(new Customer("Alex", "Guidi", "guidowww@gmail.com"));
+        List<Customer> customers = customerRepository.findAll();
+        Optional<Customer> st = customerRepository.findById(customers.get(0).getIdNumber());
+        assertTrue(st.isPresent());
+        assertEquals("Alex", st.get().getName());
+    }
 
 }

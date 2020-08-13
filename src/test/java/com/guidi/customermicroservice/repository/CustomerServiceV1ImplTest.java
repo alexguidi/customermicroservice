@@ -44,79 +44,79 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceV1ImplTest {
-	/**
-	 * Responsible to mock CustomerRepository, this time without a MongoDb.
-	 */
-	@Mock
-	private CustomerRepository customerRepository;
-	
     /**
-	 * Responsible to mock CustomerServiceV1Impl.
-	 */
-	@InjectMocks
-	CustomerServiceV1Impl customerService;
+     * Responsible to mock CustomerRepository, this time without a MongoDb.
+     */
+    @Mock
+    private CustomerRepository customerRepository;
+    
+    /**
+     * Responsible to mock CustomerServiceV1Impl.
+     */
+    @InjectMocks
+    CustomerServiceV1Impl customerService;
 
-	/**
-	 * This method is responsible to test findAll method. The method
-	 * will check if after call findAll method in service the returned 
-	 * information is the expected.
-	 */
-	@Test
-	public void findAll() {
-		Pageable pageable = PageRequest.of(0, 2);
-		
-		List<Customer> customerList = new ArrayList<>();
-		customerList.add(new Customer("Alex", "Guidi", "guidowww@gmail.com"));
-		Page<Customer> pages = new PageImpl(customerList);
-		
-		doReturn(pages).when(customerRepository).findAll(pageable);
-		
-		List<Customer> customers = customerService.findAll(pageable);
-		
-		assertThat(customers).isEqualTo(pages.getContent());
-	}
-	
-	/**
-	 * This method is responsible to test save method. The method
-	 * will check if after call save method in service the returned 
-	 * information is the expected.
-	 */
-	@Test
-	public void save() {
-		Customer customer = new Customer("Alex", "Guidi", "guidowww@gmail.com");
-		doReturn(customer).when(customerRepository).save(customer);
-		
-		Customer customerFromService = customerService.save(customer);
-		
-		assertThat(customer).isEqualTo(customerFromService);
-	}
-	
-	/**
-	 * This method is responsible to test findById method. The method
-	 * will check if after call findById method in service the returned 
-	 * information is the expected.
-	 */
-	@Test
-	public void findById() {
-		Optional<Customer> customer = Optional.of(new Customer("Alex", "Guidi", "guidowww@gmail.com"));
-		customer.get().setIdNumber("123456");
-		doReturn(customer).when(customerRepository).findById(customer.get().getIdNumber());
-		
-		Optional<Customer> customerFromService = customerService.findByID("123456");
-		
-		assertThat(customer).isEqualTo(customerFromService);	
-	}
-	
-	/**
-	 * This method is responsible to test removeCustomer method. The method
-	 * will check if after call removeCustomer method no issue happened, if 
-	 * any exception happens the method will not reach assertTrue(true) method
-	 * failing the test.
-	 */
-	@Test
-	public void removeCustomer() {
-		customerService.removeCustomer("123");
-		
-		assertTrue(true);
-	}
+    /**
+     * This method is responsible to test findAll method. The method
+     * will check if after call findAll method in service the returned 
+     * information is the expected.
+     */
+    @Test
+    public void findAll() {
+        Pageable pageable = PageRequest.of(0, 2);
+        
+        List<Customer> customerList = new ArrayList<>();
+        customerList.add(new Customer("Alex", "Guidi", "guidowww@gmail.com"));
+        Page<Customer> pages = new PageImpl(customerList);
+        
+        doReturn(pages).when(customerRepository).findAll(pageable);
+        
+        List<Customer> customers = customerService.findAll(pageable);
+        
+        assertThat(customers).isEqualTo(pages.getContent());
+    }
+    
+    /**
+     * This method is responsible to test save method. The method
+     * will check if after call save method in service the returned 
+     * information is the expected.
+     */
+    @Test
+    public void save() {
+        Customer customer = new Customer("Alex", "Guidi", "guidowww@gmail.com");
+        doReturn(customer).when(customerRepository).save(customer);
+        
+        Customer customerFromService = customerService.save(customer);
+        
+        assertThat(customer).isEqualTo(customerFromService);
+    }
+    
+    /**
+     * This method is responsible to test findById method. The method
+     * will check if after call findById method in service the returned 
+     * information is the expected.
+     */
+    @Test
+    public void findById() {
+        Optional<Customer> customer = Optional.of(new Customer("Alex", "Guidi", "guidowww@gmail.com"));
+        customer.get().setIdNumber("123456");
+        doReturn(customer).when(customerRepository).findById(customer.get().getIdNumber());
+        
+        Optional<Customer> customerFromService = customerService.findByID("123456");
+        
+        assertThat(customer).isEqualTo(customerFromService);    
+    }
+    
+    /**
+     * This method is responsible to test removeCustomer method. The method
+     * will check if after call removeCustomer method no issue happened, if 
+     * any exception happens the method will not reach assertTrue(true) method
+     * failing the test.
+     */
+    @Test
+    public void removeCustomer() {
+        customerService.removeCustomer("123");
+        
+        assertTrue(true);
+    }
 }

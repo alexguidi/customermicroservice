@@ -15,11 +15,11 @@ import com.guidi.customermicroservice.model.Customer;
  */
 public interface CustomerService {
 
-	public List<Customer> findAll(Pageable pageable);
+    public List<Customer> findAll(Pageable pageable);
 
-	public Customer save(Customer customer);
+    public Customer save(Customer customer);
 
-	public Optional<Customer> findByID(String idNumber);
+    public Optional<Customer> findByID(String idNumber);
 
-	public void removeCustomer(String idNumber);
+    public void removeCustomer(String idNumber);
 }
