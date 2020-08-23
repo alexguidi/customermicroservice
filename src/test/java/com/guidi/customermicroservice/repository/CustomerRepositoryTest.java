@@ -7,6 +7,12 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 import java.util.Optional;
 
+import com.guidi.customermicroservice.config.FakeMongo;
+import com.guidi.customermicroservice.model.Customer;
+import com.lordofthejars.nosqlunit.annotation.UsingDataSet;
+import com.lordofthejars.nosqlunit.core.LoadStrategyEnum;
+import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,19 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import com.guidi.customermicroservice.config.FakeMongo;
-import com.lordofthejars.nosqlunit.annotation.UsingDataSet;
-import com.lordofthejars.nosqlunit.core.LoadStrategyEnum;
-import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
-
-import com.guidi.customermicroservice.model.Customer;
-import com.guidi.customermicroservice.repository.CustomerRepository;
 
 /**
  * This is the class responsible to test the application, the class uses 

@@ -1,39 +1,25 @@
 package com.guidi.customermicroservice.repository;
 
-import static com.lordofthejars.nosqlunit.mongodb.MongoDbRule.MongoDbRuleBuilder.newMongoDbRule;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Rule;
+import com.guidi.customermicroservice.model.Customer;
+import com.guidi.customermicroservice.services.CustomerServiceV1Impl;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import com.guidi.customermicroservice.config.FakeMongo;
-import com.guidi.customermicroservice.model.Customer;
-import com.guidi.customermicroservice.services.CustomerService;
-import com.guidi.customermicroservice.services.CustomerServiceV1Impl;
-import com.lordofthejars.nosqlunit.annotation.UsingDataSet;
-import com.lordofthejars.nosqlunit.core.LoadStrategyEnum;
-import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import static org.mockito.Mockito.doReturn;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 /**
  * This class is responsible to test the service but without a FakeMongoDb,
